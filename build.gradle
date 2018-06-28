@@ -155,6 +155,26 @@ dependencies {
     compile group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '2.0.2'
     compile group: 'com.microsoft.azure', name: 'applicationinsights-logging-log4j2', version: '2.0.2'
 
+    compile ('com.sikulix:sikulixapi:1.1.1') {
+        exclude module: '${sikulix.libs}'
+        exclude module: 'jadb'
+    }
+    switch(System.getProperty('os.name').toLowerCase().split()[0]) {
+        case 'windows':
+            compile group: 'com.sikulix', name: 'sikulixlibswin', version: '1.1.1'
+            break
+        case 'linux':
+            compile group: 'com.sikulix', name: 'sikulixlibslux', version: '1.1.1'
+            break
+        case 'mac':
+            compile group: 'com.sikulix', name: 'sikulixlibsmac', version: '1.1.1' // MAC
+            break
+        default:
+            throw new Exception('Unknown OS')
+    }
+
+    testCompile 'junit:junit:4.12'
+
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.2.0-RC1'
     testCompile 'org.junit.jupiter:junit-jupiter-params:5.2.0-RC1'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.2.0-RC1'
@@ -513,3 +533,4 @@ jmh {
     iterations = 10
     fork = 2
 }
+
