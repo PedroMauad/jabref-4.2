@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.JMenuItem;
@@ -23,6 +24,7 @@ import org.jabref.gui.undo.NamedCompound;
 import org.jabref.gui.util.DefaultTaskExecutor;
 import org.jabref.gui.util.FileDialogConfiguration;
 import org.jabref.gui.worker.AbstractWorker;
+import org.jabref.logic.bibtex.DuplicateCheck;
 import org.jabref.logic.importer.ImportException;
 import org.jabref.logic.importer.ImportFormatReader;
 import org.jabref.logic.importer.Importer;
@@ -191,18 +193,59 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
                 } else {
                     final BasePanel panel = (BasePanel) frame.getTabbedPane().getSelectedComponent();
 
-                    ImportInspectionDialog diag = new ImportInspectionDialog(frame, panel, Localization.lang("Import"),
-                            openInNew);
-                    diag.addEntries(bibtexResult.getDatabase().getEntries());
-                    diag.entryListComplete();
-                    diag.setLocationRelativeTo(frame);
-                    diag.setVisible(true);
-                    diag.toFront();
+                    boolean duplicates = willAddDuplicates();
+                    int answer = -1;
+
+                    if (duplicates) {
+                        // TODO Adicionar localização para essa Dialog
+                        String msg = "A importação dessas entradas no database atual \ngerará duplicatas.\n Deseja importá-las em um novo banco de dados?";
+                        answer = JOptionPane.showOptionDialog(frame, msg, "Conflito de duplicatas detectado",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                                new String[] {Localization.lang("Sim"), Localization.lang("Não")},
+                                Localization.lang("Sim"));
+                    }
+
+                    System.out.println("answer : " + Integer.toString(answer));
+
+                    if (duplicates && (answer == 0)) { // Sim
+                        frame.addTab(
+                                bibtexResult.getDatabaseContext(), true);
+                        frame.output(Localization.lang("Imported entries") + ": "
+                                + bibtexResult.getDatabase().getEntryCount());
+                    }else {
+                        ImportInspectionDialog diag = new ImportInspectionDialog(frame, panel, Localization.lang("Import"),
+                                openInNew);
+                        diag.addEntries(bibtexResult.getDatabase().getEntries());
+                        diag.entryListComplete();
+                        diag.setLocationRelativeTo(frame);
+                        diag.setVisible(true);
+                        diag.toFront();
+                    }
                 }
             }
             frame.unblock();
         }
+
+
+        private boolean willAddDuplicates() {
+            final BasePanel panel = (BasePanel) frame.getTabbedPane().getSelectedComponent();
+
+            if ((panel.getDatabase() == null) || (panel.getDatabase().getEntryCount() == 0)) {
+                return false;
+            }
+
+            for (BibEntry entry : bibtexResult.getDatabase().getEntries()) {
+                Optional<BibEntry> op = DuplicateCheck.containsDuplicate(panel.getDatabase(), entry,
+                        bibtexResult.getDatabaseContext().getMode());
+                if (op.isPresent()) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
+
 
     private ParserResult mergeImportResults(List<ImportFormatReader.UnknownFormatImport> imports) {
         BibDatabase database = new BibDatabase();
