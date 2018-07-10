@@ -78,6 +78,8 @@ public class FieldEditors {
             return new MultilineEditor(fieldName, suggestionProvider, fieldCheckers, preferences);
         } else if (fieldExtras.contains(FieldProperty.KEY)) {
             return new BibtexKeyEditor(fieldName, preferences, suggestionProvider, fieldCheckers, preferences.getBibtexKeyPatternPreferences(), databaseContext, undoManager);
+        } else if (fieldExtras.contains(FieldProperty.YEAR)) {
+            return new BibtexKeyEditor(fieldName, preferences, suggestionProvider, fieldCheckers, preferences.getBibtexKeyPatternPreferences(), databaseContext, undoManager);
         }
 
         // default

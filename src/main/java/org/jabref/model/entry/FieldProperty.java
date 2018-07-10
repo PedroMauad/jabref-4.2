@@ -26,5 +26,6 @@ public enum FieldProperty {
     PUBLICATION_STATE,
     MULTILINE_TEXT,
     VERBATIM,
-    KEY
+    KEY,
+    YEAR
 }
