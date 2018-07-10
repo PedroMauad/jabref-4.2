@@ -205,6 +205,8 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
                                 Localization.lang("Sim"));
                     }
 
+                    System.out.println("answer : " + Integer.toString(answer));
+
                     if (duplicates && (answer == 0)) { // Sim
                         frame.addTab(
                                 bibtexResult.getDatabaseContext(), true);
@@ -243,7 +245,7 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
             return false;
         }
     }
-    
+
 
     private ParserResult mergeImportResults(List<ImportFormatReader.UnknownFormatImport> imports) {
         BibDatabase database = new BibDatabase();
