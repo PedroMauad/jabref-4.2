@@ -121,17 +121,22 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
                         // Unknown format:
                         frame.output(Localization.lang("Importing in unknown format") + "...");
                         // This import method never throws an IOException:
+                        System.out.println("importMenuItem run(1) | " + filename.getFileName());
                         imports.add(Globals.IMPORT_FORMAT_READER.importUnknownFormat(filename, Globals.getFileUpdateMonitor()));
+                        System.out.println("importMenuItem run(1) Complete");
                     } else {
                         frame.output(Localization.lang("Importing in %0 format", importer.getName()) + "...");
                         // Specific importer:
+                        System.out.println("importMenuItem run(2) | " + filename.getFileName());
                         ParserResult pr = importer.importDatabase(filename, Globals.prefs.getDefaultEncoding());
+                        System.out.println("importMenuItem run(2) Complete");
                         imports.add(new ImportFormatReader.UnknownFormatImport(importer.getName(), pr));
                     }
                 } catch (ImportException | IOException e) {
                     // This indicates that a specific importer was specified, and that
                     // this importer has thrown an IOException. We store the exception,
                     // so a relevant error message can be displayed.
+                    System.out.println("importMenuItem run() Error | " + e.getMessage());
                     importError = e;
                 }
             }
@@ -140,15 +145,21 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
             // have found
             // one or more bibtex results, it's best to gather them in a
             // BibDatabase.
+            System.out.println("importMenuItem mergeImportResults(imports)");
             bibtexResult = mergeImportResults(imports);
+            System.out.println("importMenuItem mergeImportResults(imports) Complete");
 
             /* show parserwarnings, if any. */
             for (ImportFormatReader.UnknownFormatImport p : imports) {
+                System.out.println("importMenuItem ImportFormatReader.UnknownFormatImport");
                 if (p != null) {
+                    System.out.println("importMenuItem ImportFormatReader.UnknownFormatImport != null");
                     ParserResult pr = p.parserResult;
                     ParserResultWarningDialog.showParserResultWarningDialog(pr, frame);
                 }
             }
+
+            System.out.println("importMenuItem Finish");
         }
 
         @Override
