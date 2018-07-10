@@ -20,9 +20,19 @@ public class BibtexKeyChecker implements Checker {
         Optional<String> author = entry.getField(FieldName.AUTHOR);
         Optional<String> title = entry.getField(FieldName.TITLE);
         Optional<String> year = entry.getField(FieldName.YEAR);
+
+        String[] name =  author.get().split(" ");
+        String lastName = name[name.length-1].toUpperCase();
+        String yearString = year.get().toUpperCase();
+        String[] titleString = title.get().split(" ");
+        String titleWord = titleString[titleString.length-1].toUpperCase();
+
         if (!author.isPresent() || !title.isPresent() || !year.isPresent()) {
             return Collections.emptyList();
         }
+
+
+
 
         if (StringUtil.isBlank(entry.getCiteKeyOptional())) {
             String authorTitleYear = entry.getAuthorTitleYear(100);
