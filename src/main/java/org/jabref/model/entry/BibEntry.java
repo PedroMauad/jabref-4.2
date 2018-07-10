@@ -197,6 +197,7 @@ public class BibEntry implements Cloneable {
     }
 
     public boolean hasCiteKey() {
+
         return !Strings.isNullOrEmpty(getCiteKey());
     }
 
@@ -418,7 +419,7 @@ public class BibEntry implements Cloneable {
             throw new IllegalArgumentException("The field name '" + name + "' is reserved");
         }
 
-        if ("year".equals(name)) {
+        if ("year".equalsIgnoreCase(name)) {
             try {
                 if (!value.matches("^[0-9]+")) {
                     throw new ParseException("", 0);
@@ -431,6 +432,18 @@ public class BibEntry implements Cloneable {
             } catch (ParseException e) {
                 value = "";
                 throw new IllegalArgumentException("Ano inválido.");
+            }
+        }
+
+        if ("Bibtexkey".equalsIgnoreCase(name)){
+            try{
+                if(!Character.isLetter(value.charAt(0))){
+                    throw new ParseException("", 0);
+                } else if (!(value.length()>=2)){
+                    throw new ParseException("", 0);
+                }
+            }catch (ParseException e){
+                throw new IllegalArgumentException("Invalid BibTeX key");
             }
         }
 
