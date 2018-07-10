@@ -46,7 +46,7 @@ public class AdvancedTabTest{
                 scr.click("1529879490966.png");
                 scr.click("1529879495618.png");
                 scr.click("1529879631855.png");
-                scr.click("1529879610105.png");
+                scr.click("1529784322106.jpg");
 
             } catch (FindFailed e) {
                 e.printStackTrace();

@@ -44,7 +44,7 @@ public class AppearancePrefsTabTest{
                 scr.click("1529879103185.png");
                 scr.click("1529879107770.png");
                 scr.click("1529879114778.png");
-                scr.click("1529879994557.png");
+                scr.click("1529784322106.png");
             } catch (FindFailed e) {
                 e.printStackTrace();
             }

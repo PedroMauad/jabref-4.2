@@ -42,7 +42,7 @@ public class BibtexKeyPatternPrefTabTest{
                 scr.type("1529879849626.png", "Teste");
                 scr.type("1529880145726.png", "Teste");
                 scr.click("1529880116113.png");
-                scr.click("1529880134940.png");
+                scr.click("1529784322106.png");
             } catch (FindFailed e) {
                 e.printStackTrace();
             }

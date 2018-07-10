@@ -49,7 +49,7 @@ public class FileTabTest{
                 scr.click("1529884259705.png");
                 scr.click("1529884264947.png");
                 scr.click("1529884269576.png");
-                scr.click("1529884273779.png");
+                scr.click("1529784322106.png");
             } catch (FindFailed e) {
                 e.printStackTrace();
             }

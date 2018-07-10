@@ -41,7 +41,7 @@ public class ExportSortingPrefsTabTest{
                 scr.click("1529880490513.png");
                 scr.click("1529880496515.png");
                 scr.click("1529880531482.png");
-                scr.click("1529880543221.png");
+                scr.click("1529784322106.png");
             } catch (FindFailed e) {
                 e.printStackTrace();
             }

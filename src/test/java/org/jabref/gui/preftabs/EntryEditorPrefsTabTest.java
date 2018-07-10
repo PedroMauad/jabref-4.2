@@ -45,7 +45,7 @@ public class EntryEditorPrefsTabTest{
                 scr.click("1529880313163.png");
                 scr.click("1529880316291.png");
                 scr.click("1529880328733.png");
-                scr.click("1529880341080.png");
+                scr.click("1529784322106.png");
 
             } catch (FindFailed e) {
                 e.printStackTrace();

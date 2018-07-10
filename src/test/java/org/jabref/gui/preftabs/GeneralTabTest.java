@@ -49,7 +49,7 @@ public class GeneralTabTest{
                 scr.click("1529883554068.png");
                 scr.doubleClick("1529883569213.png");
                 scr.type("Teste");
-                scr.click("1529883584537.png");
+                scr.click("1529784322106.png");
             } catch (FindFailed e) {
                 e.printStackTrace();
             }
