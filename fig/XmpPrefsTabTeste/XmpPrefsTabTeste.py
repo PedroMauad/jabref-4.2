@@ -1,0 +1,7 @@
+click("1529883142798.png")
+click("1529883154618.png")
+click("1529883167748.png")
+click("1529883176914.png")
+click("1529883185203.png")
+click("1529883195765.png")
+popup("Teste Encerrado")
